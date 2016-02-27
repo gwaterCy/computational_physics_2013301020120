@@ -10,6 +10,8 @@
 
 --------------------
 ##第一次作业
- ![微信](https://raw.githubusercontent.com/breakingDboy/computational_physics_2013301020120/master/mmqrcode1456561130083.png)
-
+-------
+ 
+ ![微信](https://raw.githubusercontent.com/breakingDboy/computational_physics_2013301020120/master/weixin_image.png)
+*任何问题可以用微信扫描二维码*
 > Written with [StackEdit](https://stackedit.io/).
