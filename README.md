@@ -10,6 +10,6 @@
 
 --------------------
 ##第一次作业
- 
+ ![微信](https://raw.githubusercontent.com/breakingDboy/computational_physics_2013301020120/master/mmqrcode1456561130083.png)
 
 > Written with [StackEdit](https://stackedit.io/).
