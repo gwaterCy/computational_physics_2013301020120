@@ -12,7 +12,9 @@
 >###[第一次作业](https://github.com/breakingDboy/game_vb/blob/master/README.md)
 
 > 由于老师也没有限定作业内容的范围所以便借此机会来推广一下自己早前写的游戏——一笔画。
-![一笔画](http://i.imgur.com/1tXfoUr.png)
+> ![一笔画](http://i.imgur.com/1tXfoUr.png)
+
+-------------------
 > 顺便给大家推荐一个MD（windows）编辑器**[MarkdownPad](http://markdownpad.com/)**,该编辑器支持离线状态下编辑，支持直接上传本地图片自动创建图片链接。是一款win系统下蛮好用的编辑器。
 
 ----
