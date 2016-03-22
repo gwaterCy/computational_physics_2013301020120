@@ -21,7 +21,7 @@
 
 
 -------------------
->###[第二次作业](https://github.com/breakingDboy/computational_physics_2013301020120/blob/master/show_gif.py)
+>###[第三次作业](‘
 >写的python script 可以将任何输入的字母和符号 在屏幕上动态移动显示
 >![演示图片](http://i.imgur.com/qamr5Bk.gif)
 
@@ -30,7 +30,12 @@
 > 顺便给大家推荐一个MD（windows）编辑器**[MarkdownPad](http://markdownpad.com/)**,该编辑器支持离线状态下编辑，支持直接上传本地图片自动创建图片链接。是一款win系统下蛮好用的编辑器。
 
 ----
+>###[第四次作业](https://github.com/breakingDboy/computational_physics_2013301020120/tree/master/population)
+>选择了1.6题 population growth problem
+>用Euler Method 求出了其近似解，并和其Exact Solution 比较
+>![](http://i.imgur.com/J4ErPHg.png)
 
+------
  ![微信](https://raw.githubusercontent.com/breakingDboy/computational_physics_2013301020120/master/weixin_image.png)
 *任何问题可以用微信扫描二维码*
 > Written with [StackEdit](https://stackedit.io/).
