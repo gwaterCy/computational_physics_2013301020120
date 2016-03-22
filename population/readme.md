@@ -36,7 +36,7 @@
 
 ###程序源码
 	
-[查看源码](https://github.com/breakingDboy/computational_physics_2013301020120/blob/master/population/population_growth)
+[查看源码](https://github.com/breakingDboy/computational_physics_2013301020120/blob/master/population/population_growth.py)
 	
 ###结果分析  
 当b = 0时，N 呈指数增长。红色线为解析解，绿色虚线为近似解
