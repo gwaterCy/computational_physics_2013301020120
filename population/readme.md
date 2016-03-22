@@ -3,12 +3,14 @@
 #第四次作业
 ##摘要  
 人口增长问题(Population growth problems)
+
 用Euler Method 求出了1.6题的近似解，并和其Exact Solution 比较
 
 -----
 ##背景介绍  
 人口增长模型公式：
 ![equation](https://raw.githubusercontent.com/whuCanon/computationalphysics_N2013301020085/master/chapter1/Resource/formula1.png)
+
 该等式描述了人口数量随时间变化的规律，aN项为新出生人口，-bN<sup>2</sup>代表死亡数量。b=0时，人口呈指数上涨
 ##正文
 
@@ -26,6 +28,7 @@
         
 #### 直接求得的解析解 (Exact Solution)
 ![](http://i.imgur.com/OABFxtC.png)
+
 程序实现：
 
     t = np.linspace(0,max_t,1000)
