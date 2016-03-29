@@ -8,6 +8,13 @@
 
 由于课程较多，本来没有选择计算物理的课程的，但是听说老师选用Pyhton作为基础语言，便来了兴趣。之前我已学过java/c/vb等语言,一直准备有时间接触一下Python，刚好有了机会。所以我对后面的课程充满了期待！
 
+--------
+课外连线（讨论关于pyhton与算法等所有好玩的事情）
+
+- [pyhton的招牌之一：爬虫（爬取计算物理课所有同学的名单）](https://github.com/breakingDboy/computational_physics_2013301020120/tree/master/Extra/Spider)
+- [WHU本科生绩点查询工具](https://github.com/breakingDboy/computational_physics_2013301020120/tree/master/Extra/WHU_GPA_Inquiry)
+- [机器学习之图像识别](https://github.com/breakingDboy/computational_physics_2013301020120/tree/master/Extra/Machine_Learning)
+
 --------------------
 >###[第一次作业](https://github.com/breakingDboy/game_vb/blob/master/README.md)(请点击！)
 
@@ -34,6 +41,7 @@
 >![](http://i.imgur.com/J4ErPHg.png)
 
 -----------
+
 
 > 顺便给大家推荐一个MD（windows）编辑器**[MarkdownPad](http://markdownpad.com/)**,该编辑器支持离线状态下编辑，支持直接上传本地图片自动创建图片链接。是一款win系统下蛮好用的编辑器。
 
