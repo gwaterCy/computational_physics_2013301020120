@@ -14,6 +14,7 @@
 - [pyhton的招牌之一：爬虫（爬取计算物理课所有同学的名单）](https://github.com/breakingDboy/computational_physics_2013301020120/tree/master/Extra/Spider)
 - [WHU本科生绩点查询工具](https://github.com/breakingDboy/computational_physics_2013301020120/tree/master/Extra/WHU_GPA_Inquiry)
 - [机器学习之图像识别](https://github.com/breakingDboy/computational_physics_2013301020120/tree/master/Extra/Machine_Learning)
+由于时间紧张，暂时都只提供了源码，没有写好报告，随后会再加上！
 
 --------------------
 >###[第一次作业](https://github.com/breakingDboy/game_vb/blob/master/README.md)(请点击！)
