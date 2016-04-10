@@ -18,10 +18,10 @@
 由于时间紧张，暂时都只提供了源码，没有写好报告，随后会再加上！
 
 ###作业链接
->[第二次作业](https://github.com/breakingDboy/game_vb/blob/master/README.md)
->[第三次作业](https://github.com/breakingDboy/computational_physics_2013301020120/blob/master/show_gif.py)
->[第四次作业](https://github.com/breakingDboy/computational_physics_2013301020120/tree/master/population)
->[第六次作业](https://www.zybuluo.com/Gwater/note/340589)（新增）
+>- [第二次作业](https://github.com/breakingDboy/game_vb/blob/master/README.md)
+>- [第三次作业](https://github.com/breakingDboy/computational_physics_2013301020120/blob/master/show_gif.py)
+>- [第四次作业](https://github.com/breakingDboy/computational_physics_2013301020120/tree/master/population)
+>- [第六次作业](https://www.zybuluo.com/Gwater/note/340589)（新增）
 
 --------------------
 作业预览
