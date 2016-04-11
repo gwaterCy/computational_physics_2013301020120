@@ -57,7 +57,7 @@ class cannon:
         for fs in self.cannon_flight_state:
             x.append(fs.x)
             y.append(fs.y)
-        figure(figsize(10,6))
+        figure(figsize=(10,6))
         plot([0,self.cannon_flight_state[0].end_x*1.2],[self.cannon_flight_state[0].end_y,self.cannon_flight_state[0].end_y],color='blue',linewidth='2',linestyle='--')
         plot([self.cannon_flight_state[0].end_x,self.cannon_flight_state[0].end_x],[0,self.cannon_flight_state[0].end_y*1.2],color='blue',linewidth='2',linestyle='--')        
         plot(x,y,color='red')
