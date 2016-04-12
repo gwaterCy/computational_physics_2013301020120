@@ -1,0 +1,70 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Apr 12 14:25:29 2016
+
+@author: yi cao
+"""
+import math
+from visual import *
+
+
+g = vector(0,-9.8,0)
+b2m = 4*1e-5
+Target = [10000.,1000.,10000]
+Error_limit = 0.1
+Ridus = 6.371*1e6
+
+class flight_state:
+    def __init__(self, _x = 0, _y = 0, _z = 0, _vx = 0, _vy = 0, _vz = 0,_t = 0):
+        self.x = _x
+        self.y = _y
+        self.z = _z
+        self.vx = _vx
+        self.vy = _vy
+        self.vz = _vz
+        self.t = _t
+
+class Cannon:
+    def __init__(self, _fs = flight_state(0, 0, 0, 0, 0, 0, 0), _dt = 0.1):
+        self.cannon_flight_state = []
+        self.cannon_flight_state.append(_fs)
+        self.dt = _dt
+
+    def next_state(self, current_state):
+        global g
+        next_x = current_state.x + current_state.vx * self.dt
+        next_vx = current_state.vx+self.get_a(current_state)[0]*self.dt
+        next_y = current_state.y + current_state.vy * self.dt
+        next_vy = current_state.vy+self.get_a(current_state)[1]*self.dt
+        next_z = current_state.z + current_state.vz * self.dt
+        next_vz = current_state.vz+self.get_a(current_state)[2]*self.dt
+        #print next_x, next_y
+        return flight_state(next_x, next_y,next_z, next_vx, next_vy,next_vz,current_state.t + self.dt)
+        
+    def get_a(sefl,current_state):
+        global b2m,Ridus,g
+        latitude = 30.54/180*math.pi+current_state.z/Ridus
+        omega = vector(0, 7.292e-5*math.sin(latitude), -7.292e-5*math.cos(latitude))
+        velocity = vector(current_state.vx, current_state.vy, current_state.vz)
+        speed = mag(velocity)
+        a_airdrag = -b2m * speed * velocity
+        a_coriolis = 2 * cross(omega,velocity)
+        a = g+a_airdrag +a_coriolis 
+        currentA = [a.x, a.y, a.z]
+        return currentA
+
+    def shoot(self,target):
+        end_y = target
+        while not(self.cannon_flight_state[-1].y < end_y and self.cannon_flight_state[-1].vy < 0):
+            self.cannon_flight_state.append(self.next_state(self.cannon_flight_state[-1]))
+            #print self.cannon_flight_state[-1].x, self.cannon_flight_state[-1].y, self.cannon_flight_state[-1].z,self.cannon_flight_state[-1].vx, self.cannon_flight_state[-1].vz,self.cannon_flight_state[-1].vy
+        
+        r = - (self.cannon_flight_state[-2].y-end_y) / (self.cannon_flight_state[-1].y-end_y)
+        self.cannon_flight_state[-1].x = (self.cannon_flight_state[-2].x + r * self.cannon_flight_state[-1].x) / (r + 1)
+        self.cannon_flight_state[-1].z = (self.cannon_flight_state[-2].z + r * self.cannon_flight_state[-1].z) / (r + 1)
+        self.cannon_flight_state[-1].y = end_y
+        print self.cannon_flight_state[-1].x, self.cannon_flight_state[-1].y, self.cannon_flight_state[-1].z,self.cannon_flight_state[-1].vx,self.cannon_flight_state[-1].vy ,self.cannon_flight_state[-1].vz
+        return self.cannon_flight_state[-1]
+
+cannon = Cannon(flight_state(0,0,0,200,200,200,0),0.1)    
+cannon.shoot(0)  
