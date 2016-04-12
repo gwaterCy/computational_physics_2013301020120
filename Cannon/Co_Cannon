@@ -5,14 +5,17 @@ Created on Tue Apr 12 14:25:29 2016
 @author: yi cao
 """
 import math
+import pylab
 from visual import *
+from mpl_toolkits.mplot3d import Axes3D
 
 
 g = vector(0,-9.8,0)
 b2m = 4*1e-5
-Target = [10000.,1000.,10000]
+Target = [15000.,500.,20000]
 Error_limit = 0.1
 Ridus = 6.371*1e6
+Error_limit=5
 
 class flight_state:
     def __init__(self, _x = 0, _y = 0, _z = 0, _vx = 0, _vy = 0, _vz = 0,_t = 0):
@@ -41,9 +44,9 @@ class Cannon:
         #print next_x, next_y
         return flight_state(next_x, next_y,next_z, next_vx, next_vy,next_vz,current_state.t + self.dt)
         
-    def get_a(sefl,current_state):
+    def get_a(self,current_state):
         global b2m,Ridus,g
-        latitude = 30.54/180*math.pi+current_state.z/Ridus
+        latitude = 30.54/180*math.pi#+current_state.z/Ridus
         omega = vector(0, 7.292e-5*math.sin(latitude), -7.292e-5*math.cos(latitude))
         velocity = vector(current_state.vx, current_state.vy, current_state.vz)
         speed = mag(velocity)
@@ -64,7 +67,97 @@ class Cannon:
         self.cannon_flight_state[-1].z = (self.cannon_flight_state[-2].z + r * self.cannon_flight_state[-1].z) / (r + 1)
         self.cannon_flight_state[-1].y = end_y
         print self.cannon_flight_state[-1].x, self.cannon_flight_state[-1].y, self.cannon_flight_state[-1].z,self.cannon_flight_state[-1].vx,self.cannon_flight_state[-1].vy ,self.cannon_flight_state[-1].vz
-        return self.cannon_flight_state[-1]
+        return self.cannon_flight_state
+    
+    def show_trajectory(self):
+        x = []
+        y = []
+        z = []
+        fig = pylab.figure(figsize=(8,6))
+        ax = Axes3D(fig)
+        for fs in  self.cannon_flight_state:
+            x.append(fs.x)
+            y.append(fs.y)
+            z.append(fs.z)
+        ax.plot(x, z, y, color='red')
+        
+class only_airdrag_cannon(Cannon):
+    def get_a(sefl,current_state):
+        global b2m,g
+        velocity = vector(current_state.vx, current_state.vy, current_state.vz)
+        speed = mag(velocity)
+        a_airdrag = -b2m * speed * velocity
+        a = g+a_airdrag
+        currentA = [a.x, a.y, a.z]
+        return currentA
+
+def simulation(velocity):
+    global Target
+    vx=velocity[0]
+    vy=velocity[1]
+    vz=velocity[2]
+    drag_cannon = only_airdrag_cannon(flight_state(0,0,0, vx, vy,vz, 0),_dt=0.1)
+    a = drag_cannon.shoot(Target[1])
+    return a
+
+def simulation_co(velocity):
+    global Target
+    vx=velocity[0]
+    vy=velocity[1]
+    vz=velocity[2]
+    drag_cannon = Cannon(flight_state(0,0,0, vx, vy,vz, 0),_dt=0.1)
+    a = drag_cannon.shoot(Target[1])
+    return a
+    
+def onlydrag_calculate():
+    global Target
+    r = Target[2]/Target[0]
+    distance = sqrt(Target[0]**2+Target[2]**2)
+    vx= sqrt(distance**2*9.8*0.5/(distance-Target[1])/(1+r**2))
+    velocity=[vx,sqrt(1+r**2)*vx,r*vx]
+    flight_state = simulation(velocity)[-1]
+    dl = sqrt((flight_state.x-Target[0])**2+(flight_state.z-Target[2])**2)
+    while(dl>5):
+        ScanSpeed = max((dl/1000)**2,0.1)
+        vx = vx +ScanSpeed
+        velocity=[vx,sqrt(1+r**2)*vx,r*vx]
+        flight_state = simulation(velocity)[-1]
+        dl = sqrt((flight_state.x-Target[0])**2+(flight_state.z-Target[2])**2)
+        #print 'v:'+str(v)
+    print 'v:'+str(velocity)
+    return vx
+
+def co_calculate():
+    global Target,Error_limit
+    r = Target[2]/Target[0]
+    vx = onlydrag_calculate()
+    vy = sqrt(1+r**2)*vx
+    vz =r*vx
+    velocity=[vx,vy,vz]  
+    flight_state = simulation_co(velocity)[-1]
+    dx=(flight_state.x-Target[0])**2
+    dz=(flight_state.z-Target[2])**2
+    dl = sqrt(dx+dz)
+    dl_=dl+1
+    while(dl < dl_ or dl<Error_limit):
+        dr = min(sqrt(dz/dx),10)
+        ScanSpeed_x = max((sqrt(dx)/200)**2,0.01)
+        ScanSpeed_z = max((sqrt(dz)/200)**2,0.01*dr)
+        vz=vz+ScanSpeed_z
+        vx=vx-ScanSpeed_x
+        vy = sqrt(1+r**2)*vx
+        velocity=[vx,vy,vz]
+        flight_state = simulation_co(velocity)[-1]
+        dx=(flight_state.x-Target[0])**2
+        dz=(flight_state.z-Target[2])**2
+        dl_ =dl
+        dl = sqrt(dx+dz)     
+        #print 'v:'+str(velocity)+str(dl)
+    print '\n v:'+str(velocity)+'\n distance:'+str(dl)
+    return velocity
 
 cannon = Cannon(flight_state(0,0,0,200,200,200,0),0.1)    
-cannon.shoot(0)  
+cannon.shoot(1000)
+cannon.show_trajectory()
+co_calculate()
+pylab.show()
