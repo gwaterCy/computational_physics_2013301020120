@@ -4,13 +4,14 @@ Created on Sun Apr 10 18:30:15 2016
 solve the problem of calculating cannon initial velocity to attack a given target
 @author: yi cao
 """
-from pylab import *
-from matplotlib import pyplot as plt
+from matplotlib.pyplot import *
+from matplotlib import animation
+import math
 
 g = 9.8
 b2m = 4*1e-5
 Origin = [0.,0.]
-Target = [10000.,1000.]
+Target = [20000.,1000.]
 Error_limit = 0.1
 
 class flight_state:
@@ -63,13 +64,12 @@ class cannon:
         plot(x,y,color='red')
         xlabel('distance(m)')
         ylabel('height(m)')
-        savefig('123.png')
         #show()
 
 class Drag_cannon(cannon):
     def next_state(self, current_state):
         global g, b2m
-        v = sqrt(current_state.vx * current_state.vx + current_state.vy * current_state.vy)
+        v = math.sqrt(current_state.vx * current_state.vx + current_state.vy * current_state.vy)
         next_x = current_state.x + current_state.vx * self.dt
         next_vx = current_state.vx - b2m * v * current_state.vx * self.dt
         next_y = current_state.y + current_state.vy * self.dt
@@ -79,7 +79,7 @@ class Drag_cannon(cannon):
 
 def simulation(v):
     global Target,Origin
-    drag_cannon = Drag_cannon(flight_state(Origin[0], Origin[0], v, v,Target[0],Target[1], 0),_dt=0.1)
+    drag_cannon = Drag_cannon(flight_state(Origin[0], Origin[1], v, v,Target[0],Target[1], 0),_dt=0.1)
     a = drag_cannon.shoot()
     return a
     
@@ -87,20 +87,56 @@ def simulation(v):
 def scanning():
     global Target,Origin,Error_limit
     v = sqrt((Target[0]-Origin[0])**2*g*0.5/(Target[0]-Origin[0]-Target[1]+Origin[1]))
-    a = Target[0]-simulation(v)[-1].x
-    while(a>Error_limit):
-        ScanSpeed = max((a/100)**2/100,0.01)
+    dl = Target[0]-simulation(v)[-1].x
+    while(dl>Error_limit):
+        ScanSpeed = max((dl/100)**2/100,0.01)
         v = v +ScanSpeed
-        a = Target[0]-simulation(v)[-1].x
+        dl = Target[0]-simulation(v)[-1].x
         print 'v:'+str(v)
     print 'v:'+str(v)
     return v
-                
-
-v = scanning()
-a = Target[0]-simulation(v)[-1].x
-print 'dx:  '+str(a)
-b = Drag_cannon(flight_state(Origin[0], Origin[0], v, v,Target[0],Target[1], 0),_dt=0.1)
-b.shoot()
-b.show_trajectory()
-show()
+    
+fig = figure(figsize=(8,6))
+ax = axes(xlim=(0, 25000), ylim=(0, 8000))
+ax.plot([0,Target[0]*1.2],[Target[1],Target[1]],color='r',linewidth='2',linestyle='--')
+ax.plot([Target[0],Target[0]],[0,Target[1]*1.2],color='r',linewidth='2',linestyle='--') 
+v = math.sqrt((Target[0]-Origin[0])**2*g*0.5/(Target[0]-Origin[0]-Target[1]+Origin[1]))   
+line, = ax.plot([], [], lw=2)
+sign = -20
+_x,_y =[],[]
+def init():
+    line.set_data([], [])
+    return line,
+    
+def animate(i):
+    global Target,Origin,Error_limit,v,sign,_x,_y
+    x = []
+    y = []    
+    if sign<-1:
+        sign = sign + 1
+    elif sign == -1:
+        flight_state = simulation(v)
+        for i in flight_state:
+            x.append(i.x)
+            y.append(i.y)
+        dl = Target[0]-flight_state[-1].x
+        if (dl>Error_limit):
+            ScanSpeed = max((dl/5000),0.05)
+            v = v +ScanSpeed
+        else:
+            sign = 0
+    else:
+        flight_state = simulation(v)
+        try:
+            _x.append(flight_state[sign].x)
+            _y.append(flight_state[sign].y)
+            x, y = _x,_y
+            sign = sign +1 
+            print sign
+        except IndexError:
+            exit()         
+    line.set_data(x, y)
+    return line,
+    
+anim = animation.FuncAnimation(fig, animate, init_func=init,frames=200, interval=20, blit=True)
+show()         
