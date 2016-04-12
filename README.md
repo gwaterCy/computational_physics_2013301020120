@@ -22,6 +22,7 @@
 >- [第三次作业](https://github.com/breakingDboy/computational_physics_2013301020120/blob/master/show_gif.py)
 >- [第四次作业](https://github.com/breakingDboy/computational_physics_2013301020120/tree/master/population)
 >- [第六次作业](https://www.zybuluo.com/Gwater/note/340589)（新增）
+>- [第七次作业](https://www.zybuluo.com/Gwater/note/341644)(新增)
 
 --------------------
 作业预览
