@@ -1,6 +1,6 @@
 
 
-欢迎来到曹一的作业文档!
+欢迎来到曹一的计算物理文档!
 =====
 
  >学号：2013301020120   
@@ -40,8 +40,6 @@
 -------------------
 >###[第三次作业](https://github.com/breakingDboy/computational_physics_2013301020120/blob/master/show_gif.py)
 >写的python script 可以将任何输入的字母和符号 在屏幕上动态移动显示
->![演示图片](http://i.imgur.com/qamr5Bk.gif)
-
 
 
 ----
